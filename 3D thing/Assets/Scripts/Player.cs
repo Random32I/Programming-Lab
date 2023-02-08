@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] Vector2 sensitivity;
     [SerializeField] Vector2 rotation;
+    [SerializeField] Vector3 lastPos;
     [SerializeField] RenderTexture camView;
 
     private Vector2 GetInput()
@@ -68,6 +69,7 @@ public class Player : MonoBehaviour
             RaycastHit hit;
             int layerMask;
 
+
             if (!holding)
             {
                 layerMask = 1 << 8;
@@ -94,7 +96,6 @@ public class Player : MonoBehaviour
                     else
                     {
                         holding = true;
-                        hitRig.gameObject.transform.position = transform.position + GameObject.Find("Main Camera").transform.forward * 2 + Vector3.up / 2;
                         hitRig.useGravity = false;
                         hitRig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                         hitRig.velocity = Vector3.zero;
@@ -111,7 +112,6 @@ public class Player : MonoBehaviour
         }
         if (hitRig)
         {
-            hitRig.gameObject.transform.position = transform.position + GameObject.Find("Main Camera").transform.forward * 2 + Vector3.up / 2;
             hitRig.rotation = Quaternion.Euler(new Vector3(0, GameObject.Find("Main Camera").transform.eulerAngles.y, 0));
         }
 
@@ -135,6 +135,20 @@ public class Player : MonoBehaviour
         //Movement (probably a better way, but it works)
         rig.velocity = new Vector3(((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) + ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed), rig.velocity.y, 
             ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) - ((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed));
-        //rig.velocity = new Vector3(GameObject.Find("Main Camera").transform.forward.x * Input.GetAxisRaw("Horizontal") * speed - GameObject.Find("Main Camera").transform.forward.x * Input.GetAxisRaw("Vertical") * speed, rig.velocity.y, GameObject.Find("Main Camera").transform.forward.z * Input.GetAxisRaw("Vertical") * speed - GameObject.Find("Main Camera").transform.forward.z * Input.GetAxisRaw("Horizontal") * speed);
+        
+        //Moves held object infront of you while maintaining velocity
+        if (hitRig)
+        {
+            hitRig.velocity = (GameObject.Find("Main Camera").transform.position + GameObject.Find("Main Camera").transform.forward * 2 - lastPos) / Time.deltaTime;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        //remembering the last position of a held object to calculate velocity
+        if (hitRig)
+        {
+            lastPos = hitRig.transform.position;
+        }
     }
 }
