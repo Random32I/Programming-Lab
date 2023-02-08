@@ -105,7 +105,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Movement (probly a better way, but it works)
+        //Movement (probably a better way, but it works)
         rig.velocity = new Vector3(((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) + ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed), rig.velocity.y, 
             ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) - ((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed));
         //rig.velocity = new Vector3(GameObject.Find("Main Camera").transform.forward.x * Input.GetAxisRaw("Horizontal") * speed - GameObject.Find("Main Camera").transform.forward.x * Input.GetAxisRaw("Vertical") * speed, rig.velocity.y, GameObject.Find("Main Camera").transform.forward.z * Input.GetAxisRaw("Vertical") * speed - GameObject.Find("Main Camera").transform.forward.z * Input.GetAxisRaw("Horizontal") * speed);
