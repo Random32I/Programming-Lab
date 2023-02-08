@@ -10,11 +10,12 @@ public class Player : MonoBehaviour
     [SerializeField] int jumpForce;
     [SerializeField] int maxSpeed;
     [SerializeField] int speed;
-    Rigidbody boxRig;
+    Rigidbody hitRig;
     bool holding;
 
     [SerializeField] Vector2 sensitivity;
     [SerializeField] Vector2 rotation;
+    [SerializeField] RenderTexture camView;
 
     private Vector2 GetInput()
     {
@@ -64,34 +65,60 @@ public class Player : MonoBehaviour
         //Interact
         if (Input.GetKeyDown(KeyCode.E))
         {
+            RaycastHit hit;
+            int layerMask;
+
             if (!holding)
             {
-                RaycastHit hit;
-                int layerMask = 1 << 8;
+                layerMask = 1 << 8;
 
-                if (Physics.Raycast(transform.position, GameObject.Find("Main Camera").transform.forward, out hit, 5, layerMask))
+                if (Physics.Raycast(GameObject.Find("Main Camera").transform.position, GameObject.Find("Main Camera").transform.forward, out hit, 5, layerMask))
                 {
-                    holding = true;
-                    boxRig = hit.rigidbody;
+                    hitRig = hit.rigidbody;
 
-                    boxRig.gameObject.transform.position = transform.position + GameObject.Find("Main Camera").transform.forward * 2 + Vector3.up /2;
-                    boxRig.useGravity = false;
-                    boxRig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                    boxRig.velocity = Vector3.zero;
+                    //Button
+                    if (hit.transform.tag == "Button")
+                    {
+                        if (hit.transform.name == "Button 1")
+                        {
+                            GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = camView;
+                            GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = null;
+                        }
+                        else if (hit.transform.name == "Button 2")
+                        {
+                            GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = camView;
+                            GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = null;
+                        }
+                    }
+                    //Objects
+                    else
+                    {
+                        holding = true;
+                        hitRig.gameObject.transform.position = transform.position + GameObject.Find("Main Camera").transform.forward * 2 + Vector3.up / 2;
+                        hitRig.useGravity = false;
+                        hitRig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                        hitRig.velocity = Vector3.zero;
+                    }
                 }
             }
             else
             {
                 holding = false;
-                boxRig.useGravity = true;
-                boxRig.constraints = RigidbodyConstraints.None;
-                boxRig = null;
+                hitRig.useGravity = true;
+                hitRig.constraints = RigidbodyConstraints.None;
+                hitRig = null;
             }
         }
-        if (boxRig)
+        if (hitRig)
         {
-            boxRig.gameObject.transform.position = transform.position + GameObject.Find("Main Camera").transform.forward * 2 + Vector3.up / 2;
-            boxRig.rotation = Quaternion.Euler(new Vector3(0, GameObject.Find("Main Camera").transform.eulerAngles.y, 0));
+            hitRig.gameObject.transform.position = transform.position + GameObject.Find("Main Camera").transform.forward * 2 + Vector3.up / 2;
+            hitRig.rotation = Quaternion.Euler(new Vector3(0, GameObject.Find("Main Camera").transform.eulerAngles.y, 0));
+        }
+
+        //Exit
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
 
         //Debug
