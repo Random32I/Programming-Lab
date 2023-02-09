@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField] Vector3 lastPos;
     [SerializeField] RenderTexture camView;
 
+
     private Vector2 GetInput()
     {
         Vector2 input = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));

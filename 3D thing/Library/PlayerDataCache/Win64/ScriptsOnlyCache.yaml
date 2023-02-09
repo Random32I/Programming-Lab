@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - FloorButton
     - Player
     Unity.Postprocessing.Runtime.dll:
     - UnityEngine.Rendering.PostProcessing.AmbientOcclusion
@@ -55,7 +56,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
   methodsToPreserve: []
   sceneClasses:
-    Assets/Scenes/SampleScene.unity:
+    Assets/Scenes/Game.unity:
     - Class: 1
       Script: {instanceID: 0}
     - Class: 4
@@ -114,6 +115,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 6564}
     - Class: 114
       Script: {instanceID: 7686}
+    - Class: 114
+      Script: {instanceID: 25754}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 135
@@ -1019,8 +1022,14 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: ffa3611b32e1fad6aa90d14694007739
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: FloorButton
   platform: 19
   scenePathNames:
-  - Assets/Scenes/SampleScene.unity
+  - Assets/Scenes/Game.unity
   playerPath: C:/Users/alexl/OneDrive/Documents/GitHub/Programming-Lab/3D thing/Build/3D
     thing.exe
