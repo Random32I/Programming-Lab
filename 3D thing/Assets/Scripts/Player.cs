@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,6 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] int speed;
     Rigidbody hitRig;
     bool holding;
+    bool grounded;
 
     [SerializeField] Vector2 sensitivity;
     [SerializeField] Vector2 rotation;
@@ -59,7 +57,16 @@ public class Player : MonoBehaviour
         }
 
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && rig.velocity.y == 0)
+        if (Physics.Raycast(transform.position, Vector3.down, GetComponent<Collider>().bounds.extents.y + 0.1f))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
