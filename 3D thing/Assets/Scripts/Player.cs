@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] int jumpForce;
     [SerializeField] int maxSpeed;
     [SerializeField] int speed;
-    [SerializeField] int jumps;
+    [SerializeField] int jumps = 50;
     Rigidbody hitRig;
     bool holding;
     bool grounded;
@@ -67,10 +67,13 @@ public class Player : MonoBehaviour
             grounded = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+        if (Input.GetKeyDown(KeyCode.Space) && grounded && jumps > 0)
         {
-            rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            jumps++;
+            if (transform.position.x <= -3.14f && transform.position.x >= -13.17f && transform.position.z >= -5.55f && transform.position.z <= 4.45f)
+            {
+                rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                jumps--;
+            }
         }
 
         //Interact
