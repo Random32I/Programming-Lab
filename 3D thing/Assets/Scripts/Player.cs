@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     [SerializeField] int jumpForce;
     [SerializeField] int maxSpeed;
     [SerializeField] int speed;
+    [SerializeField] int jumps;
     Rigidbody hitRig;
     bool holding;
     bool grounded;
@@ -69,6 +70,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            jumps++;
         }
 
         //Interact
@@ -158,5 +160,10 @@ public class Player : MonoBehaviour
         {
             lastPos = hitRig.transform.position;
         }
+    }
+
+    public int GetJumps()
+    {
+        return jumps;
     }
 }
