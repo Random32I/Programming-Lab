@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     Rigidbody hitRig;
     bool holding;
     bool grounded;
+    bool crouching = false;
 
     [SerializeField] Vector2 sensitivity;
     [SerializeField] Vector2 rotation;
@@ -74,6 +75,20 @@ public class Player : MonoBehaviour
                 rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 jumps--;
             }
+        }
+
+        //Crouch
+        if (Input.GetKey(KeyCode.LeftControl) && !crouching)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y / 2, transform.localScale.z);
+            crouching = true;
+            transform.position += Vector3.down /2 ;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftControl) && crouching)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2, transform.localScale.z);
+            crouching = false;
         }
 
         //Interact
@@ -153,6 +168,10 @@ public class Player : MonoBehaviour
         if (hitRig)
         {
             hitRig.velocity = (GameObject.Find("Main Camera").transform.position + GameObject.Find("Main Camera").transform.forward * 2 - lastPos) / Time.deltaTime;
+        }
+        if (crouching)
+        {
+            rig.velocity = new Vector3(rig.velocity.x / 2, rig.velocity.y, rig.velocity.z / 2);
         }
     }
 
