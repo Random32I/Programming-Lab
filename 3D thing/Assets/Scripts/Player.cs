@@ -167,18 +167,21 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Movement (probably a better way, but it works)
-        rig.velocity = new Vector3(((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) + ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed), rig.velocity.y, 
-            ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) - ((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed));
-        
-        //Moves held object infront of you while maintaining velocity
-        if (hitRig)
+        if (!game.GetPaused())
         {
-            hitRig.velocity = (GameObject.Find("Main Camera").transform.position + GameObject.Find("Main Camera").transform.forward * 2 - lastPos) / Time.deltaTime;
-        }
-        if (crouching)
-        {
-            rig.velocity = new Vector3(rig.velocity.x / 2, rig.velocity.y, rig.velocity.z / 2);
+            //Movement (probably a better way, but it works)
+            rig.velocity = new Vector3(((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) + ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed), rig.velocity.y,
+                ((float)Math.Cos(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Vertical") * speed) - ((float)Math.Sin(GameObject.Find("Main Camera").transform.rotation.eulerAngles.y * Math.PI / 180) * Input.GetAxisRaw("Horizontal") * speed));
+
+            //Moves held object infront of you while maintaining velocity
+            if (hitRig)
+            {
+                hitRig.velocity = (GameObject.Find("Main Camera").transform.position + GameObject.Find("Main Camera").transform.forward * 2 - lastPos) / Time.deltaTime;
+            }
+            if (crouching)
+            {
+                rig.velocity = new Vector3(rig.velocity.x / 2, rig.velocity.y, rig.velocity.z / 2);
+            }
         }
     }
 
