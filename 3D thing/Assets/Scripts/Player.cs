@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] Vector2 rotation;
     [SerializeField] Vector3 lastPos;
     [SerializeField] RenderTexture camView;
+    [SerializeField] GameManager game;
 
 
     private Vector2 GetInput()
@@ -37,125 +38,131 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //Mouse Movement
-        Vector2 wantedVelocity = GetInput() * sensitivity;
-
-        if (rotation.y < 90 && rotation.y > -90)
+        if (!game.GetPaused())
         {
-            rotation += wantedVelocity * Time.deltaTime;
+            //Mouse Movement
+            Vector2 wantedVelocity = GetInput() * sensitivity;
 
-            rotation = new Vector2(rotation.x % 360, rotation.y % 360);
-
-            GameObject.Find("Main Camera").transform.localEulerAngles = new Vector3(-rotation.y, rotation.x, 0);
-        }
-        if (rotation.y > 90)
-        {
-            rotation.y = 89.99f;
-        }
-        else if (rotation.y < -90)
-        {
-            rotation.y = -89.99f;
-        }
-
-        //Jump
-        if (Physics.Raycast(transform.position, Vector3.down, GetComponent<Collider>().bounds.extents.y + 0.1f))
-        {
-            grounded = true;
-        }
-        else
-        {
-            grounded = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && grounded && jumps > 0)
-        {
-            if (transform.position.x <= -3.14f && transform.position.x >= -13.17f && transform.position.z >= -5.55f && transform.position.z <= 4.45f)
+            if (rotation.y < 90 && rotation.y > -90)
             {
-                rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                jumps--;
+                rotation += wantedVelocity * Time.deltaTime;
+
+                rotation = new Vector2(rotation.x % 360, rotation.y % 360);
+
+                GameObject.Find("Main Camera").transform.localEulerAngles = new Vector3(-rotation.y, rotation.x, 0);
             }
-        }
-
-        //Crouch
-        if (Input.GetKey(KeyCode.LeftControl) && !crouching)
-        {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y / 2, transform.localScale.z);
-            crouching = true;
-            transform.position += Vector3.down /2 ;
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftControl) && crouching)
-        {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2, transform.localScale.z);
-            crouching = false;
-        }
-
-        //Interact
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            RaycastHit hit;
-            int layerMask;
-
-
-            if (!holding)
+            if (rotation.y > 90)
             {
-                layerMask = 1 << 8;
+                rotation.y = 89.99f;
+            }
+            else if (rotation.y < -90)
+            {
+                rotation.y = -89.99f;
+            }
 
-                if (Physics.Raycast(GameObject.Find("Main Camera").transform.position, GameObject.Find("Main Camera").transform.forward, out hit, 5, layerMask))
-                {
-                    hitRig = hit.rigidbody;
-
-                    //Button
-                    if (hit.transform.tag == "Button")
-                    {
-                        if (hit.transform.name == "Button 1")
-                        {
-                            GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = camView;
-                            GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = null;
-                        }
-                        else if (hit.transform.name == "Button 2")
-                        {
-                            GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = camView;
-                            GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = null;
-                        }
-                    }
-                    //Objects
-                    else
-                    {
-                        holding = true;
-                        hitRig.useGravity = false;
-                        hitRig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                        hitRig.velocity = Vector3.zero;
-                    }
-                }
+            //Jump
+            if (Physics.Raycast(transform.position, Vector3.down, GetComponent<Collider>().bounds.extents.y + 0.1f))
+            {
+                grounded = true;
             }
             else
             {
-                holding = false;
-                hitRig.useGravity = true;
-                hitRig.constraints = RigidbodyConstraints.None;
-                hitRig = null;
+                grounded = false;
+            }
+
+            if (Input.GetKeyDown(game.GetControls(0)) && grounded && jumps > 0)
+            {
+                if (transform.position.x <= -3.14f && transform.position.x >= -13.17f && transform.position.z >= -5.55f && transform.position.z <= 4.45f)
+                {
+                    rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                    jumps--;
+                }
+            }
+
+            //Crouch
+            if (Input.GetKey(KeyCode.LeftControl) && !crouching)
+            {
+                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y / 2, transform.localScale.z);
+                crouching = true;
+                transform.position += Vector3.down / 2;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftControl) && crouching)
+            {
+                transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * 2, transform.localScale.z);
+                crouching = false;
+            }
+
+            //Interact
+            if (Input.GetKeyDown(game.GetControls(1)))
+            {
+                RaycastHit hit;
+                int layerMask;
+
+
+                if (!holding)
+                {
+                    layerMask = 1 << 8;
+
+                    if (Physics.Raycast(GameObject.Find("Main Camera").transform.position, GameObject.Find("Main Camera").transform.forward, out hit, 5, layerMask))
+                    {
+                        hitRig = hit.rigidbody;
+
+                        //Button
+                        if (hit.transform.tag == "Button")
+                        {
+                            if (hit.transform.name == "Button 1")
+                            {
+                                GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = camView;
+                                GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = null;
+                            }
+                            else if (hit.transform.name == "Button 2")
+                            {
+                                GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = camView;
+                                GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = null;
+                            }
+                        }
+                        //Objects
+                        else
+                        {
+                            holding = true;
+                            hitRig.useGravity = false;
+                            hitRig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                            hitRig.velocity = Vector3.zero;
+                        }
+                    }
+                }
+                else
+                {
+                    holding = false;
+                    hitRig.useGravity = true;
+                    hitRig.constraints = RigidbodyConstraints.None;
+                    hitRig = null;
+                }
+            }
+            if (hitRig)
+            {
+                hitRig.rotation = Quaternion.Euler(new Vector3(0, GameObject.Find("Main Camera").transform.eulerAngles.y, 0));
             }
         }
-        if (hitRig)
-        {
-            hitRig.rotation = Quaternion.Euler(new Vector3(0, GameObject.Find("Main Camera").transform.eulerAngles.y, 0));
-        }
 
-        //Exit
+        //Pause
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            if (game.GetPaused())
+            {
+                game.SetPaused(false);
+                Cursor.lockState = CursorLockMode.Locked;
+                game.SetControls(false);
+            }
+            else
+            {
+                game.SetPaused(true);
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
 
         //Debug
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            Debug.Log(new Vector3(GameObject.Find("Main Camera").transform.forward.x * Input.GetAxisRaw("Vertical") * speed, rig.velocity.y, GameObject.Find("Main Camera").transform.forward.z * Input.GetAxisRaw("Horizontal") * speed));
-            Debug.Log(GameObject.Find("Main Camera").transform.forward);
-            Debug.Log(new Vector2 (Input.GetAxisRaw("Vertical"), Input.GetAxisRaw("Horizontal")));
-        }
     }
 
     private void FixedUpdate()
