@@ -23,6 +23,7 @@ public class ButtonManager : MonoBehaviour
         game.SetPaused(false);
         Cursor.lockState = CursorLockMode.Locked;
         game.SetControls(false);
+        Time.timeScale = 1;
     }
 
     public void Settings()

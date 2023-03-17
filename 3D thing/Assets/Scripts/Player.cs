@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -72,10 +73,17 @@ public class Player : MonoBehaviour
 
             if (Input.GetKeyDown(game.GetControls(0)) && grounded && jumps > 0)
             {
-                if (transform.position.x <= -3.14f && transform.position.x >= -13.17f && transform.position.z >= -5.55f && transform.position.z <= 4.45f)
+                if (SceneManager.GetActiveScene().name == "Game")
+                {
+                    if (transform.position.x <= -3.14f && transform.position.x >= -13.17f && transform.position.z >= -5.55f && transform.position.z <= 4.45f)
+                    {
+                        rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                        jumps--;
+                    }
+                }
+                else
                 {
                     rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                    jumps--;
                 }
             }
 
@@ -111,15 +119,22 @@ public class Player : MonoBehaviour
                         //Button
                         if (hit.transform.tag == "Button")
                         {
-                            if (hit.transform.name == "Button 1")
+                            if (SceneManager.GetActiveScene().name == "Game")
                             {
-                                GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = camView;
-                                GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = null;
+                                if (hit.transform.name == "Button 1")
+                                {
+                                    GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = camView;
+                                    GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = null;
+                                }
+                                else if (hit.transform.name == "Button 2")
+                                {
+                                    GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = camView;
+                                    GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = null;
+                                }
                             }
-                            else if (hit.transform.name == "Button 2")
+                            else
                             {
-                                GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = camView;
-                                GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = null;
+                                SceneManager.LoadScene("Game");
                             }
                         }
                         //Objects
@@ -154,11 +169,13 @@ public class Player : MonoBehaviour
                 game.SetPaused(false);
                 Cursor.lockState = CursorLockMode.Locked;
                 game.SetControls(false);
+                Time.timeScale = 1;
             }
             else
             {
                 game.SetPaused(true);
                 Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
             }
         }
 

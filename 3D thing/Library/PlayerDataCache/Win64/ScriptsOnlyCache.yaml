@@ -96,6 +96,24 @@ ScriptsOnlyBuild:
   methodsToPreserve:
   - assembly: Assembly-CSharp
     fullTypeName: ButtonManager
+    methodName: Exit
+  - assembly: Assembly-CSharp
+    fullTypeName: ButtonManager
+    methodName: Back
+  - assembly: Assembly-CSharp
+    fullTypeName: ButtonManager
+    methodName: Jump
+  - assembly: Assembly-CSharp
+    fullTypeName: ButtonManager
+    methodName: Settings
+  - assembly: Assembly-CSharp
+    fullTypeName: ButtonManager
+    methodName: Interact
+  - assembly: Assembly-CSharp
+    fullTypeName: ButtonManager
+    methodName: Resume
+  - assembly: Assembly-CSharp
+    fullTypeName: ButtonManager
     methodName: Jump
   - assembly: Assembly-CSharp
     fullTypeName: ButtonManager
@@ -132,8 +150,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
-    - Class: 49
-      Script: {instanceID: 0}
     - Class: 54
       Script: {instanceID: 0}
     - Class: 64
@@ -146,16 +162,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 84
       Script: {instanceID: 0}
-    - Class: 89
-      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 1644}
-    - Class: 114
-      Script: {instanceID: 2288}
     - Class: 114
       Script: {instanceID: 2388}
     - Class: 114
@@ -178,10 +190,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 3782}
     - Class: 114
       Script: {instanceID: 3972}
-    - Class: 114
-      Script: {instanceID: 4400}
-    - Class: 114
-      Script: {instanceID: 4678}
     - Class: 114
       Script: {instanceID: 4966}
     - Class: 114
@@ -211,6 +219,89 @@ ScriptsOnlyBuild:
     - Class: 198
       Script: {instanceID: 0}
     - Class: 199
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    Assets/Scenes/GamePart2.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 49
+      Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 84
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 1644}
+    - Class: 114
+      Script: {instanceID: 2288}
+    - Class: 114
+      Script: {instanceID: 2388}
+    - Class: 114
+      Script: {instanceID: 2598}
+    - Class: 114
+      Script: {instanceID: 2976}
+    - Class: 114
+      Script: {instanceID: 3294}
+    - Class: 114
+      Script: {instanceID: 3384}
+    - Class: 114
+      Script: {instanceID: 3770}
+    - Class: 114
+      Script: {instanceID: 4400}
+    - Class: 114
+      Script: {instanceID: 4678}
+    - Class: 114
+      Script: {instanceID: 5466}
+    - Class: 114
+      Script: {instanceID: 6098}
+    - Class: 114
+      Script: {instanceID: 6252}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 135
+      Script: {instanceID: 0}
+    - Class: 136
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
       Script: {instanceID: 0}
     - Class: 213
       Script: {instanceID: 0}
@@ -337,7 +428,7 @@ ScriptsOnlyBuild:
     className: PostProcessLayer
   - hash:
       serializedVersion: 2
-      Hash: cddcbb450719ad48fe883c129e56384b
+      Hash: 5ebad0d29c27990f5d426700db614530
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -1135,6 +1226,7 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   platform: 19
   scenePathNames:
+  - Assets/Scenes/GamePart2.unity
   - Assets/Scenes/Game.unity
   playerPath: C:/Users/alexl/OneDrive/Documents/GitHub/Programming-Lab/3D thing/Build/3D
     thing.exe

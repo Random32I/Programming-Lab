@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Android;
 using TMPro;
+using System.Net;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,43 +17,65 @@ public class GameManager : MonoBehaviour
     [SerializeField] static KeyCode[] controlsKeys = new KeyCode[2] {KeyCode.Space, KeyCode.E};
     [SerializeField] TMP_Text[] controlText = new TMP_Text[2];
     [SerializeField] int controlIndex = 0;
+    [SerializeField] GameObject loadingBar;
+    [SerializeField] GameObject loadingScreen;
+    [SerializeField] float loadingTime = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        if (SceneManager.GetActiveScene().name == "GamePart2")
+        {
+            loadingTime = 2;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (paused && !controls)
+        if (loadingTime != 2)
         {
-            pauseMenu.SetActive(true);
-            controlsMenu.SetActive(false);
-
-        }
-        else if (paused && controls)
-        {
-            pauseMenu.SetActive(false);
-            controlsMenu.SetActive(true);
-        }
-        else if (!paused)
-        {
-            pauseMenu.SetActive(false);
-            controlsMenu.SetActive(false);
-        }
-
-        if (recording && paused)
-        {
-            foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode))) //use of Enumeration
+            if (SceneManager.GetActiveScene().name == "Game")
             {
-                if (Input.GetKeyDown(key) && !Input.GetKeyDown(KeyCode.Escape))
+                StartCoroutine(LoadingScreen());
+            }
+        }
+        else
+        {
+            if (SceneManager.GetActiveScene().name == "Game")
+            {
+                loadingScreen.SetActive(false);
+            }
+
+
+            if (paused && !controls)
+            {
+                pauseMenu.SetActive(true);
+                controlsMenu.SetActive(false);
+
+            }
+            else if (paused && controls)
+            {
+                pauseMenu.SetActive(false);
+                controlsMenu.SetActive(true);
+            }
+            else if (!paused)
+            {
+                pauseMenu.SetActive(false);
+                controlsMenu.SetActive(false);
+            }
+
+            if (recording && paused)
+            {
+                foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode))) //use of Enumeration
                 {
-                    controlsKeys[controlIndex] = key;
-                    controlText[controlIndex].text = key.ToString();
-                    recording = false;
-                    break;
+                    if (Input.GetKeyDown(key) && !Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        controlsKeys[controlIndex] = key;
+                        controlText[controlIndex].text = key.ToString();
+                        recording = false;
+                        break;
+                    }
                 }
             }
         }
@@ -84,5 +109,12 @@ public class GameManager : MonoBehaviour
     public KeyCode GetControls(int index)
     {
         return controlsKeys[index];
+    }
+
+    IEnumerator LoadingScreen()
+    {
+        loadingTime = Mathf.Lerp(loadingTime, 2, Time.deltaTime / Mathf.Abs(loadingTime - Random.Range(1,20)));
+        loadingBar.transform.localScale = new Vector3(loadingTime, 1, 1);
+        yield return new WaitForSeconds(0);
     }
 }
