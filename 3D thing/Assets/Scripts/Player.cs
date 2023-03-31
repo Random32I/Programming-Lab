@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDataPersistence
 {
     [SerializeField] Rigidbody rig;
     [SerializeField] int jumpForce;
@@ -214,5 +214,15 @@ public class Player : MonoBehaviour
     public int GetJumps()
     {
         return jumps;
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.jumps = data.jumps;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.jumps = this.jumps;
     }
 }

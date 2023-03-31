@@ -360,6 +360,10 @@
 "Assets/Scripts/FloorButton.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Player.cs"
+"Assets/Scripts/Save/DataPersistenceManager.cs"
+"Assets/Scripts/Save/FileDataHandler.cs"
+"Assets/Scripts/Save/GameData.cs"
+"Assets/Scripts/Save/IDataPersistence.cs"
 "Assets/Scripts/SignManager.cs"
 -langversion:9.0
 
