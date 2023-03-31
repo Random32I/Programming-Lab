@@ -30,6 +30,7 @@ public class FileDataHandler
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         dataToLoad = reader.ReadToEnd();
+                        dataToLoad = XOR(dataToLoad);
                     }
                 }
 
@@ -59,10 +60,39 @@ public class FileDataHandler
                     writer.Write(dataToStore);
                 }
             }
+            string dataToXOR = "";
+            using (FileStream stream = new FileStream(fullPath, FileMode.Open))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    dataToXOR = reader.ReadToEnd();
+                    Debug.Log(dataToXOR);
+                }
+            }
+            string XORData = XOR(dataToXOR);
+            
+            using (FileStream stream = new FileStream(fullPath, FileMode.Create))
+            {
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.Write(XORData);
+                }
+            }
         }
         catch(Exception e)
         {
             Debug.LogError("fuck you, im not gonna save because: " + e);
         }
+    }
+
+    string XOR(string data)
+    {
+        string encryptionCodeWord = "UHw9qhdaI)W*Yd021-c0aH";
+        string modifiedData = "";
+        for (int i = 0; i < data.Length; i++)
+        {
+            modifiedData += (char)(data[i] ^ encryptionCodeWord[i % encryptionCodeWord.Length]);
+        }
+        return modifiedData;
     }
 }
