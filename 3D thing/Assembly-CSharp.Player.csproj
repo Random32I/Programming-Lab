@@ -66,6 +66,9 @@
     <Compile Include="Assets\Scripts\DeathBarrier.cs" />
     <Compile Include="Assets\Scripts\FloorButton.cs" />
     <Compile Include="Assets\Scripts\Save\GameData.cs" />
+    <Compile Include="Assets\Scripts\Interactable.cs" />
+    <Compile Include="Assets\Scripts\Object.cs" />
+    <Compile Include="Assets\Scripts\Button.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -310,11 +310,18 @@
 -r:"Library/Bee/artifacts/1900b0aP.dag/Unity.VisualScripting.Flow.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aP.dag/Unity.VisualScripting.State.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.ref.dll"
+"Assets/Scripts/Button.cs"
 "Assets/Scripts/ButtonManager.cs"
 "Assets/Scripts/DeathBarrier.cs"
 "Assets/Scripts/FloorButton.cs"
 "Assets/Scripts/GameManager.cs"
+"Assets/Scripts/Interactable.cs"
+"Assets/Scripts/Object.cs"
 "Assets/Scripts/Player.cs"
+"Assets/Scripts/Save/DataPersistenceManager.cs"
+"Assets/Scripts/Save/FileDataHandler.cs"
+"Assets/Scripts/Save/GameData.cs"
+"Assets/Scripts/Save/IDataPersistence.cs"
 "Assets/Scripts/SignManager.cs"
 -langversion:9.0
 

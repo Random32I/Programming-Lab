@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject loadingBar;
     [SerializeField] GameObject loadingScreen;
     [SerializeField] float loadingTime = 0;
+    [SerializeField] Interactable[] interactables = new Interactable[5];
 
     // Start is called before the first frame update
     void Start()
@@ -116,5 +117,19 @@ public class GameManager : MonoBehaviour
         loadingTime = Mathf.Lerp(loadingTime, 2, Time.deltaTime / Mathf.Abs(loadingTime - Random.Range(1,20)));
         loadingBar.transform.localScale = new Vector3(loadingTime, 1, 1);
         yield return new WaitForSeconds(0);
+    }
+
+    public List<T> FindAllObjectsOfType<T>() where T : Interactable
+    {
+        List<T> list = new List<T>();
+        foreach(Interactable interactable in interactables)
+        {
+            if (interactable is T)
+            {
+                list.Add(interactable as T);
+            }
+        }
+
+        return list;
     }
 }

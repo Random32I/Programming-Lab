@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 475689474}
+  player: {fileID: 0}
 --- !u!114 &115854305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1066,6 +1067,12 @@ MonoBehaviour:
   loadingBar: {fileID: 0}
   loadingScreen: {fileID: 0}
   loadingTime: 0
+  interactables:
+  - {fileID: 1542541956}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &496560388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1254,6 +1261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 475689474}
+  player: {fileID: 0}
 --- !u!114 &533005697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1710,6 +1718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 475689474}
+  player: {fileID: 0}
 --- !u!114 &894795382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2745,6 +2754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 475689474}
+  player: {fileID: 0}
 --- !u!114 &1523299841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2851,6 +2861,7 @@ GameObject:
   - component: {fileID: 1542541954}
   - component: {fileID: 1542541953}
   - component: {fileID: 1542541952}
+  - component: {fileID: 1542541956}
   m_Layer: 8
   m_Name: Button 1
   m_TagString: Button
@@ -2937,6 +2948,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1542541956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542541951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affe5edb88a0f7544a29ba60d7cbf77e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1704981338
 GameObject:
   m_ObjectHideFlags: 0
@@ -3126,6 +3149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 475689474}
+  player: {fileID: 0}
 --- !u!114 &1862601733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3581,6 +3605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 475689474}
+  player: {fileID: 0}
 --- !u!114 &2018837044
 MonoBehaviour:
   m_ObjectHideFlags: 0

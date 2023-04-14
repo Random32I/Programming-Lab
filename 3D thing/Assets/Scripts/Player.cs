@@ -117,33 +117,39 @@ public class Player : MonoBehaviour, IDataPersistence
                         hitRig = hit.rigidbody;
 
                         //Button
-                        if (hit.transform.tag == "Button")
+                        for (int i = 0; i < game.FindAllObjectsOfType<Button>().Count; i++)
                         {
-                            if (SceneManager.GetActiveScene().name == "Game")
+                            if (hit.transform.name == game.FindAllObjectsOfType<Button>()[i].name)
                             {
-                                if (hit.transform.name == "Button 1")
+                                if (SceneManager.GetActiveScene().name == "Game")
                                 {
-                                    GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = camView;
-                                    GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = null;
+                                    if (hit.transform.name == "Button 1")
+                                    {
+                                        GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = camView;
+                                        GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = null;
+                                    }
+                                    else if (hit.transform.name == "Button 2")
+                                    {
+                                        GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = camView;
+                                        GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = null;
+                                    }
                                 }
-                                else if (hit.transform.name == "Button 2")
+                                else
                                 {
-                                    GameObject.Find("Camera 2").GetComponent<Camera>().targetTexture = camView;
-                                    GameObject.Find("Camera 1").GetComponent<Camera>().targetTexture = null;
+                                    SceneManager.LoadScene("Game");
                                 }
-                            }
-                            else
-                            {
-                                SceneManager.LoadScene("Game");
                             }
                         }
                         //Objects
-                        else
+                        for (int i = 0; i < game.FindAllObjectsOfType<Object>().Count; i++)
                         {
-                            holding = true;
-                            hitRig.useGravity = false;
-                            hitRig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                            hitRig.velocity = Vector3.zero;
+                            if (hit.transform.name == game.FindAllObjectsOfType<Object>()[i].name)
+                            {
+                                holding = true;
+                                hitRig.useGravity = false;
+                                hitRig.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+                                hitRig.velocity = Vector3.zero;
+                            }
                         }
                     }
                 }
